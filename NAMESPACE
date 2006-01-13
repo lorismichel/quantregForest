@@ -1,0 +1,6 @@
+useDynLib(quantregForest)
+
+export(quantregForest,predict.quantregForest)
+S3method(print,quantregForest)
+S3method(predict,quantregForest)
+S3method(plot,quantregForest)
