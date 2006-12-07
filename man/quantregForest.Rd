@@ -30,7 +30,9 @@ quantregForest(x, y, mtry = ceiling(ncol(x)/3), nodesize = 10, ntree = 1000)
   A value of class \code{quantregForest}, for which \code{print}, \code{plot}, and
   \code{predict} methods are available.
 }
-\references{ \url{http://stat.ethz.ch/~nicolai/quantregForest} }
+\references{N. Meinshausen (2006)
+"Quantile Regression Forests", Journal of Machine Learning Research 7, 983-999
+\url{http://jmlr.csail.mit.edu/papers/v7/}}
 \author{ Nicolai Meinshausen }
 \seealso{ For prediction, see \code{\link{predict.quantregForest}} }
 \examples{

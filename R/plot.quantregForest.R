@@ -6,7 +6,7 @@ function(x, ...){
 
   or <- order(quant[,2])
   n <- length(x$origObs)
-  plot(quant[or,2],x$origObs[or],pch=20,xlab="predicted median values", ylab ="observed response",type="n",main="95 \% prediction intervals on out-of-bag data") 
+  plot(quant[or,2],x$origObs[or],pch=20,xlab="predicted median values", ylab ="observed response",type="n",main="95 % prediction intervals on out-of-bag data") 
 
 
   med <- quant[or,2]

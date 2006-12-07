@@ -26,7 +26,9 @@ c(0.1, 0.5, 0.9), ...)
   contains the estimates for the second entry of \code{quantiles} and so
   on. 
 }
-\references{ \url{http://stat.ethz.ch/~nicolai/quantregForest} }
+\references{N. Meinshausen (2006)
+"Quantile Regression Forests", Journal of Machine Learning Research 7, 983-999
+\url{http://jmlr.csail.mit.edu/papers/v7/} }
 \author{ Nicolai Meinshausen }
 \note{ 
 }
