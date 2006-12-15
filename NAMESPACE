@@ -1,6 +1,7 @@
 useDynLib(quantregForest)
 
-export(quantregForest,predict.quantregForest)
+export(quantregForest)
+import(stats,graphics,grDevices)
 S3method(print,quantregForest)
 S3method(predict,quantregForest)
 S3method(plot,quantregForest)

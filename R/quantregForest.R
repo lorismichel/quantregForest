@@ -33,7 +33,7 @@ function(x,y, mtry= ceiling(ncol(x)/3)  , nodesize= 10, ntree= 1000){
         ncat <- sapply(x, function(x) if(is.factor(x) && !is.ordered(x))
                        length(levels(x)) else 1)
       } else {
-        ncat <- rep(1, p)
+        ncat <- 1
     }
     maxcat <- max(ncat)
     if (maxcat > 32)
