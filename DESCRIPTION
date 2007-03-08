@@ -1,8 +1,8 @@
 Package: quantregForest
 Type: Package
 Title: Quantile Regression Forests
-Version: 0.2-1
-Date: 2006-12-15
+Version: 0.2-2
+Date: 2007-03-08
 Author: Nicolai Meinshausen
 Maintainer: Nicolai Meinshausen <nicolai@stat.berkeley.edu>
 Depends: randomForest
@@ -14,4 +14,4 @@ Description: Quantile Regression Forests is a tree-based ensemble method
   written by Andy Liaw.
 License: GPL
 URL:  http://www.stat.berkeley.edu/~nicolai
-Packaged: Sat Dec 16 11:17:06 2006; nicolai
+Packaged: Wed Mar 14 16:42:38 2007; nicolai
