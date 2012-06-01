@@ -1,0 +1,11 @@
+9dd2c393dc79d83465b543813627aa9a *DESCRIPTION
+309fa61f40ec1275306bf5445f1493fa *NAMESPACE
+5c690afef36420ea3f63a8de51bd0fa7 *R/getnodes.R
+a8328a3c2bd7f5f9c2e9effb38622007 *R/plot.quantregForest.R
+f10787861a7e811b9eacd4d0ee1f7aee *R/predict.quantregForest.R
+12ea214c56c2b847ff3532a5d2478715 *R/print.quantregForest.R
+d83527ebe0ef22938f67bb78a51d5fe8 *R/quantregForest.R
+45d11b8e5f071b738f1ee4492c02a77a *man/predict.quantregForest.Rd
+44b73e19e8d80416f49cc6f3833fb2c1 *man/quantregForest.Rd
+1956beb0f7b07a2a5999dbe147ebf519 *src/findweights.c
+030faa2d788172cf7b0b896a69de21a6 *src/findweightsinbag.c

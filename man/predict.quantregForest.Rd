@@ -18,8 +18,6 @@ c(0.1, 0.5, 0.9), ...)
     [0,1]) for which the quantile estimates should be returned }
   \item{...}{ Further arguments (not in use in the current version) }
 }
-\details{
-}
 \value{
   A matrix. The first column contains the conditional quantile estimates
   for the first entry in the vector \code{quantiles}, the second column
@@ -30,8 +28,6 @@ c(0.1, 0.5, 0.9), ...)
 "Quantile Regression Forests", Journal of Machine Learning Research 7, 983-999
 \url{http://jmlr.csail.mit.edu/papers/v7/} }
 \author{ Nicolai Meinshausen }
-\note{ 
-}
 \seealso{ \code{\link{quantregForest}} for fitting Quantile Regression Forests }
 %\examples{ }
 \keyword{ regression }
