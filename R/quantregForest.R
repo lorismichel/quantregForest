@@ -1,5 +1,5 @@
 "quantregForest" <-
-function(x,y, mtry= ceiling(ncol(x)/3)  , nodesize= 10, ntree= 1000){
+function(x,y, mtry= ceiling(ncol(x)/3)  , nodesize= 10, ntree= 100, importance=FALSE, quantiles=c(0.1,0.5,0.9)){
 
   ## Some checks 
   if(! class(y) %in% c("numeric","integer") )
@@ -39,6 +39,10 @@ function(x,y, mtry= ceiling(ncol(x)/3)  , nodesize= 10, ntree= 1000){
     if (maxcat > 32)
         stop("Can not handle categorical predictors with more than 32 categories.")
 
+  ## Check that importance is logical
+  if(!is.logical(importance)){
+    stop("importance has to be logical")
+  }
   
   ## Note that crucial parts of the computation
   ## are only invoked by the predict method
@@ -52,7 +56,14 @@ function(x,y, mtry= ceiling(ncol(x)/3)  , nodesize= 10, ntree= 1000){
   qrf[["origNodes"]] <- getnodes(qrf,x)
   qrf[["origObs"]] <- y
 
+  if(importance==TRUE){
+    qrf[["importance"]]<-predict.imp(qrf,quantiles=quantiles,origpred=x)
+    qrf[["quantiles"]]<-quantiles
+  }
+  else{
+    qrf[["importance"]]<-qrf$importance[,-1]
+    qrf[["quantiles"]]<-NULL
+  }
   
   return(qrf)
 }
-
