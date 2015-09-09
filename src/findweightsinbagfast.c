@@ -13,9 +13,9 @@ void findweightsinbagfast(double *ONv, double *OrdNv,double *filterednodes,int *
   	count=0;
 	countf=0;
   	for(j=1;j<=(*nobs);++j){//set the first l values of the new node vector
-		if(inbag[index[j+(k-1)*(*nobs)-1]+(k-1)*(*nobs)-1]==1){//only if out-of-bag data!
-			filterednodes[j+(k-1)*(*nobs)-1]=OrdNv[j+(k-1)*(*nobs)-1];
-			newindex[j+(k-1)*(*nobs)-1]=index[j+(k-1)*(*nobs)-1];
+		if(inbag[index[j+(k-1)*(*nobs)-1]+(k-1)*(*nobs)-1]==1){
+			filterednodes[1+countf+(k-1)*(*nobs)-1]=OrdNv[j+(k-1)*(*nobs)-1];
+			newindex[1+countf+(k-1)*(*nobs)-1]=index[j+(k-1)*(*nobs)-1];
 			countf=countf+1;
 			if(countf==(*l)){
 				break;
@@ -23,7 +23,7 @@ void findweightsinbagfast(double *ONv, double *OrdNv,double *filterednodes,int *
 		}
 	}
 	for (j=(*l)+1;j<=(*nobs);++j){//create a node vector with unique elements
-		if(inbag[index[j+(k-1)*(*nobs)-1]+(k-1)*(*nobs)-1]==1){//only if out-of-bag data
+		if(inbag[index[j+(k-1)*(*nobs)-1]+(k-1)*(*nobs)-1]==1){
 			if(OrdNv[j+(k-1)*(*nobs)-1]!=filterednodes[count+1+(k-1)*(*nobs)-1]){
 				filterednodes[(*l)+1+count+(k-1)*(*nobs)-1]=OrdNv[j+(k-1)*(*nobs)-1];
 				newindex[(*l)+1+count+(k-1)*(*nobs)-1]=index[j+(k-1)*(*nobs)-1];

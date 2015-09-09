@@ -1,4 +1,4 @@
-cdb47aae1b8d6302084e7b009d3f6dbd *DESCRIPTION
+ffdd703b7b0e91172946a223e11a2526 *DESCRIPTION
 08b675338ec7aededfb125994ffc545a *NAMESPACE
 5a7ee9be077fac15ad5023f0516420a6 *R/getnodes.R
 0cb90fc41ced914aaa0987e2e5ecf350 *R/importance.quantregForest.R
@@ -14,10 +14,10 @@ c5a9a13df4425ba1b29b7c74d8007108 *R/predict.quantregForest.R
 12ea214c56c2b847ff3532a5d2478715 *R/print.quantregForest.R
 fc1d85fe2c1951ba6779dca5a0860b2a *R/quantregForest.R
 8a6a5a33b6ef97bf14b74c0f611aea29 *R/varImpPlot.qrf.R
-653fceae109a8b610d22ae665631cdad *build/vignette.rds
+b802610bc4c9c1bd0796c8b0ba158b79 *build/vignette.rds
 f3655d84a609803065c37c077110833b *inst/doc/quantregForest.R
 9b650a380176ac6a77e98eb7d69efe7b *inst/doc/quantregForest.Rnw
-3f1593512a460cadc3dc0540dcf85dd6 *inst/doc/quantregForest.pdf
+95c5b2ff8b3a076d448161ec67187808 *inst/doc/quantregForest.pdf
 b8c58c734929b658caa2fe6f0e92b3d5 *man/importance.quantregForest.rd
 0907692919d4283e66fc5e616b25daba *man/plot.quantregForest.rd
 3dba35f6e9c5f166552c755602bbea3c *man/predict.quantregForest.Rd
@@ -26,7 +26,7 @@ b8c58c734929b658caa2fe6f0e92b3d5 *man/importance.quantregForest.rd
 1956beb0f7b07a2a5999dbe147ebf519 *src/findweights.c
 bc9a18852e4cb9a67dade8558435d582 *src/findweightsfast.c
 030faa2d788172cf7b0b896a69de21a6 *src/findweightsinbag.c
-883a528766bd249d59ff93d4c417b136 *src/findweightsinbagfast.c
-1f3657e69ba5622336f033c1f2446615 *src/findweightsinbagfastimp.c
+d5ee1090bb8200a46501323bd716e0d3 *src/findweightsinbagfast.c
+cd35ff281320aa7c911c14fc9b98d3cb *src/findweightsinbagfastimp.c
 39116e9081e8486ea3ebfb4eee0f13ba *vignettes/Lit.bib
 9b650a380176ac6a77e98eb7d69efe7b *vignettes/quantregForest.Rnw
