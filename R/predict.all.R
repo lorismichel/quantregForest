@@ -1,5 +1,5 @@
 "predict.all" <-
-function(object, newdata= NULL, quantiles= c(0.1,0.5,0.9), ... ) {
+function(object, newdata= NULL, quantiles= c(0.1,0.5,0.9), normalise=1,... ) {
 
   ### Checking arguments
   if (!inherits(object, "quantregForest")) 
@@ -54,7 +54,6 @@ function(object, newdata= NULL, quantiles= c(0.1,0.5,0.9), ... ) {
       quant <- matrix(nrow=nobs,ncol=length(quantiles))
       ntree <- object$ntree
       
-      normalise <- 0
       weightvec <- rep(0,nobs*nobs)
       counti <- rep(0,nobs)
       thres <- 5*.Machine$double.eps
@@ -109,7 +108,6 @@ function(object, newdata= NULL, quantiles= c(0.1,0.5,0.9), ... ) {
       
       nobs <- length(origObs)
       nnew <- nrow(x)
-      normalise <- 0
       weightvec <- rep(0,nobs*nnew)
       counti <- rep(0,nobs)
       thres <- 5*.Machine$double.eps

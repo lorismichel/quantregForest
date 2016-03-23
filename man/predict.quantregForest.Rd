@@ -8,7 +8,9 @@ Prediction of test data with quantile regression forests.
 }
 
 \usage{
-\method{predict}{quantregForest}(object, newdata = NULL, quantiles = c(0.1, 0.5, 0.9), all = FALSE, obs = 1, ...)
+\method{predict}{quantregForest}(object, newdata = NULL, 
+                         quantiles = c(0.1, 0.5, 0.9), all = FALSE, 
+                         obs = 1,normalise=TRUE, ...)
 }
 \arguments{
 \item{object}{ An object of class \code{quantregForest} }
@@ -18,6 +20,7 @@ Prediction of test data with quantile regression forests.
     [0,1]) for which the quantile estimates should be returned }
 \item{all}{ A logical value. \code{all=TRUE} uses all observations for prediction. \code{all=FALSE} uses only a certain number of observations per node for prediction (set with argument \code{obs}). The default is \code{all=FALSE} }
 \item{obs}{ An integer number. Determines the maximal number of observations per node to use for prediction. The input is ignored for \code{all=TRUE}. The default is \code{obs=1} }
+\item{normalise}{ A logical value. Should weights be normalised by the inverse of the number of observations in a node? Default is \code{TRUE}.  }
 \item{...}{ Further arguments (not in use in the current version) }
  
 }

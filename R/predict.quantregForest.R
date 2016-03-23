@@ -1,4 +1,4 @@
-"predict.quantregForest"<-function(object, newdata=NULL,quantiles=c(0.1,0.5,0.9),all=FALSE,obs=1,...)
+"predict.quantregForest"<-function(object, newdata=NULL,quantiles=c(0.1,0.5,0.9),all=FALSE,obs=1,normalise=TRUE,...)
 {
   #check if all is logical
   if(!is.logical(all)){
@@ -14,6 +14,6 @@
     predict.fast(object,newdata,quantiles,obs)
   }
   else{#use all observations for prediction
-    predict.all(object,newdata,quantiles)
+    predict.all(object,newdata,quantiles,normalise=if(normalise) 1 else 0)
   }
 }
