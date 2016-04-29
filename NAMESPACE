@@ -1,10 +1,6 @@
-useDynLib(quantregForest)
-export(quantregForest,varImpPlot.qrf)
-import(stats,graphics,grDevices,randomForest)
+export(quantregForest)
+import(stats,randomForest)
 
 S3method(predict,quantregForest)
 
-S3method(plot,quantregForest)
-
 S3method(print,quantregForest)
-S3method(importance,quantregForest)

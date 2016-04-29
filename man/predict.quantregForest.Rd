@@ -8,32 +8,34 @@ Prediction of test data with quantile regression forests.
 }
 
 \usage{
-\method{predict}{quantregForest}(object, newdata = NULL, 
-                         quantiles = c(0.1, 0.5, 0.9), all = FALSE, 
-                         obs = 1,normalise=TRUE, ...)
+\method{predict}{quantregForest}(object, newdata, 
+                         what = c(0.1, 0.5, 0.9), ...)
 }
 \arguments{
 \item{object}{ An object of class \code{quantregForest} }
-\item{newdata}{ A data frame or matrix containing new data. If
-    not given, the out-of-bag prediction in \code{object} is returned }
-\item{quantiles}{ A vector of quantiles (with numerical values in
-    [0,1]) for which the quantile estimates should be returned }
-\item{all}{ A logical value. \code{all=TRUE} uses all observations for prediction. \code{all=FALSE} uses only a certain number of observations per node for prediction (set with argument \code{obs}). The default is \code{all=FALSE} }
-\item{obs}{ An integer number. Determines the maximal number of observations per node to use for prediction. The input is ignored for \code{all=TRUE}. The default is \code{obs=1} }
-\item{normalise}{ A logical value. Should weights be normalised by the inverse of the number of observations in a node? Default is \code{TRUE}.  }
-\item{...}{ Further arguments (not in use in the current version) }
+\item{newdata}{ A data frame or matrix containing new data. }
+\item{what}{ Can be a vector of quantiles or a function.
  
+ Default for \code{what} is a a vector of quantiles (with numerical values in
+    [0,1]) for which the conditional quantile estimates should be returned.
+
+If a function it has to take as argument a numeric vector and return either a summary statistic (such as \code{mean},\code{median} or \code{sd} to get conditional mean, median or standard deviation) or a vector of values (such as with \code{quantiles} or via \code{sample}) or a function (for example with \code{ecdf}).}  
+\item{...}{ Additional arguments (currently not in use).}
 }
 
-\details{
-  It might be useful to try \code{all=TRUE} if the function is slow when given a high number of observations to fit the model and predicting the quantiles only for few new sample points.
-}
 \value{
-A matrix. The first column contains the conditional quantile estimates for the first entry in the vector quantiles. The second column contains the estimates for the second entry of quantiles and so on.
-}
+A vector, matrix or list. 
 
+If \code{what} is a vector with desired quantiles (the default is \code{what=c(0.1,0.5,0.9)}), a matrix with one column per requested quantile returned. 
+
+If just a single quantile is specified (for example via \code{what=0.5}), a vector is returned.
+
+If \code{what} is a function with numerical return value (for example via \code{what=function(x) sample(x,10,replace=TRUE)} to sample 10 new observations from conditional distribution), the output is also a matrix (or vector if just a scalar is returned). 
+
+If \code{what} has a function as output (such as \code{what=ecdf}), a list will be returned with one element per new sample point (and the element contains the desired function).
+}
 \author{
-Nicolai Meinshausen, Lukas Schiesser
+Nicolai Meinshausen
 }
 
 \seealso{
@@ -44,6 +46,11 @@ Nicolai Meinshausen, Lukas Schiesser
 \dontshow{
 library(quantregForest)
 }
+
+################################################
+##  Load air-quality data (and preprocessing) ##
+################################################
+
 data(airquality)
 set.seed(1)
 
@@ -62,14 +69,49 @@ Xtest      <- airquality[-indextrain,2:6]
 Ytrain     <- airquality[ indextrain,1]
 Ytest      <- airquality[-indextrain,1]
 
+
+
+
+################################################
+##     compute Quantile Regression Forests    ##
+################################################
+
 qrf <- quantregForest(x=Xtrain, y=Ytrain)
+qrf <- quantregForest(x=Xtrain, y=Ytrain, nodesize=10,sampsize=30)
 
-## plot out-of-bag predictions for the training data
-plot(qrf)
 
-## compute out-of-bag predictions 
-quant.outofbag <- predict(qrf)
+## predict 0.1, 0.5 and 0.9 quantiles for test data
+conditionalQuantiles  <- predict(qrf,  Xtest)
+print(conditionalQuantiles[1:4,])
 
-## predict test data using all obervations per node for prediction
-quant.newdata  <- predict(qrf, newdata= Xtest,all=TRUE)
+## predict 0.1, 0.2,..., 0.9 quantiles for test data
+conditionalQuantiles  <- predict(qrf, Xtest, what=0.1*(1:9))
+print(conditionalQuantiles[1:4,])
+
+## estimate conditional standard deviation
+conditionalSd <- predict(qrf,  Xtest, what=sd)
+print(conditionalSd[1:4])
+
+## estimate conditional mean (as in original RF)
+conditionalMean <- predict(qrf,  Xtest, what=mean)
+print(conditionalMean[1:4])
+
+## sample 10 new observations from conditional distribution at each new sample
+newSamples <- predict(qrf, Xtest,what = function(x) sample(x,10,replace=TRUE))
+print(newSamples[1:4,])
+
+
+## get ecdf-function for each new test data point
+## (output will be a list with one element per sample)
+condEcdf <- predict(qrf,  Xtest, what=ecdf)
+condEcdf[[10]](30) ## get the conditional distribution at value 30 for i=10
+## or, directly, for all samples at value 30 (returns a vector)
+condEcdf30 <- predict(qrf, Xtest, what=function(x) ecdf(x)(30))
+print(condEcdf30[1:4])
+
+## to use other functions of the package randomForest, convert class back
+class(qrf) <- "randomForest"
+importance(qrf) ## importance measure from the standard RF
+
+
 }

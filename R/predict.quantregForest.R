@@ -1,19 +1,35 @@
-"predict.quantregForest"<-function(object, newdata=NULL,quantiles=c(0.1,0.5,0.9),all=FALSE,obs=1,normalise=TRUE,...)
+"predict.quantregForest"<-function(object,newdata, what=c(0.1,0.5,0.9),...  )
 {
-  #check if all is logical
-  if(!is.logical(all)){
-    stop("all has to be logical")
-  }
-  
-  if(all==FALSE){#don't use all observations for prediction
-    #check if obs is integer
-    if(!{obs%%1==0}){
-      stop("obs has to be an integer")
+    class(object) <- "randomForest"
+    predictNodes <- attr(predict(object,newdata,nodes=TRUE),"nodes")
+    rownames(predictNodes) <- NULL
+    valuesPredict <- 0*predictNodes
+    ntree <- ncol(object[["valuesNodes"]])
+    for (tree in 1:ntree){
+        valuesPredict[,tree] <- object[["valuesNodes"]][ predictNodes[,tree],tree]  
     }
+    if(is.function(what)){
+        if(is.function(what(1:4))){
+            result <- apply(valuesPredict,1,what)
+        }else{
+            if(length(what(1:4))==1){
+                result <- apply(valuesPredict,1,what)
+            }else{
+                result <- t(apply(valuesPredict,1,what))
+            }
+        }
+    }else{
+        if( !is.numeric(what)) stop(" `what' needs to be either a function or a vector with quantiles")
+        if( min(what)<0) stop(" if `what' specifies quantiles, the minimal values needs to be non-negative")
+        if( max(what)>1) stop(" if `what' specifies quantiles, the maximal values cannot exceed 1")
+        if(length(what)==1){
+            result <- apply( valuesPredict,1,quantile, what)
+        }else{
+            result <- t(apply( valuesPredict,1,quantile, what))
+            colnames(result) <- paste("quantile=",what)
+        }
+    }
+    return(result)
     
-    predict.fast(object,newdata,quantiles,obs)
-  }
-  else{#use all observations for prediction
-    predict.all(object,newdata,quantiles,normalise=if(normalise) 1 else 0)
-  }
+    
 }

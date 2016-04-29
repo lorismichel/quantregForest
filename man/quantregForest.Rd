@@ -6,46 +6,29 @@
   data
 }
 \usage{
-quantregForest(x,y, mtry= ceiling(ncol(x)/3)  , nodesize= 10, ntree= 100, 
-importance=FALSE ,quantiles=c(0.1,0.5,0.9))
+quantregForest(x,y, ...)
 }
 \arguments{
-  \item{x}{ A matrix or data.frame containing the predictor variables }
-  \item{y}{ The response variable; a numerical vector  }
-  \item{mtry}{ The number of variables to try for each split; same
-  default setting as for Random Forests }
-  \item{nodesize}{ The minimal number of instances in each terminal node;
-  the default setting is slightly higher than for Random Forests }
-  \item{ntree}{ The number of trees to be grown }
-  \item{importance}{ If \code{TRUE} importance of predictors is assessed }
-  \item{quantiles}{ A vector of quantiles (with numerical values in
-    [0,1]) for which the variable importance measure should be computed. (Ignored if \code{importance=FALSE})  }
-}
-
-\details{
-  It might be useful to try various values of \code{mtry} and see which
-  one works best;
-  however, results are typically not heavily dependent
-  on this parameter.
+  \item{x}{ A matrix or data.frame containing the predictor variables. }
+  \item{y}{ The response variable. }
+  \item{...}{ Other arguments passed to \code{randomForest} such as  \code{nodesize} or \code{mtry} etc.}
 }
 \value{
-  A value of class \code{quantregForest}, for which \code{print}, \code{plot}, \code{predict} and \code{importance} methods are available.
+  A value of class \code{quantregForest}, for which \code{print} and \code{predict} methods are available.
   Class \code{quantregForest} is a list of the following components additional to the ones given by class \code{randomForest}:
   \item{call}{the original call to \code{quantregForest}}
-  \item{origNodes}{the nodes for the original data in each tree}
-  \item{origObs}{the values of the response variable used to fit the tree}
-  \item{importance}{if \code{importance=TRUE} a matrix. The first column contains the mean increase in prediction error for the first entry in the vector \code{quantiles}, the second column containes the same for the second entry of \code{quantiles} and so on. }
-  \item{quantiles}{list of quantiles for which the variable importance measure was computed if \code{importance=TRUE}}
+  \item{valuesNodes}{a matrix that contains per tree and node one subsampled observation}
+}
+\details{ The object can be converted back into a standard \code{randomForest} object and all the functions of the \code{randomForest] package can then be used (see example below).}
+
+ The response \code{y} should be numeric. Some use cases exists if \code{y} is a factor (such as sampling from conditional distribution when using for example \code{what=function(x) sample(x,10)} as shown for a numerical response in the examples. However, trying to generate quantiles will generate an error if \code{y} is a factor and the functions is really meant more for ncontinuous responses.)
 }
 \references{N. Meinshausen (2006)
 "Quantile Regression Forests", Journal of Machine Learning Research 7, 983-999
 \url{http://jmlr.csail.mit.edu/papers/v7/}}
-\author{ Nicolai Meinshausen, Lukas Schiesser }
+\author{ Nicolai Meinshausen }
 \seealso{
-\code{\link{predict.quantregForest}},
-\code{\link{plot.quantregForest}},
-\code{\link{importance.quantregForest}},
-\code{\link{varImpPlot.qrf}},
+\code{\link{predict.quantregForest}}
 }
 \examples{
 
@@ -72,25 +55,50 @@ Ytrain     <- airquality[ indextrain,1]
 Ytest      <- airquality[-indextrain,1]
 
 
-
 ################################################
 ##     compute Quantile Regression Forests    ##
 ################################################
 
-qrf <- quantregForest(x=Xtrain, y=Ytrain, importance=TRUE)
+qrf <- quantregForest(x=Xtrain, y=Ytrain)
+qrf <- quantregForest(x=Xtrain, y=Ytrain, nodesize=10,sampsize=30)
 
 
-## plot out-of-bag predictions for the training data
-plot(qrf)
+## predict 0.1, 0.5 and 0.9 quantiles for test data
+conditionalQuantiles  <- predict(qrf,  Xtest)
+print(conditionalQuantiles[1:4,])
 
-## compute out-of-bag predictions 
-quant.outofbag <- predict(qrf)
+## predict 0.1, 0.2,..., 0.9 quantiles for test data
+conditionalQuantiles  <- predict(qrf, Xtest, what=0.1*(1:9))
+print(conditionalQuantiles[1:4,])
 
-## predict test data using all obervations per node for prediction
-quant.newdata  <- predict(qrf, newdata= Xtest, all=TRUE)
+## estimate conditional standard deviation
+conditionalSd <- predict(qrf,  Xtest, what=sd)
+print(conditionalSd[1:4])
 
-## look at computed importance measure of predictors
-importance(qrf)
+## estimate conditional mean (as in original RF)
+conditionalMean <- predict(qrf,  Xtest, what=mean)
+print(conditionalMean[1:4])
+
+## sample 10 new observations from conditional distribution at each new sample
+newSamples <- predict(qrf, Xtest,what = function(x) sample(x,10,replace=TRUE))
+print(newSamples[1:4,])
+
+
+## get ecdf-function for each new test data point
+## (output will be a list with one element per sample)
+condEcdf <- predict(qrf,  Xtest, what=ecdf)
+condEcdf[[10]](30) ## get the conditional distribution at value 30 for i=10
+## or, directly, for all samples at value 30 (returns a vector)
+condEcdf30 <- predict(qrf, Xtest, what=function(x) ecdf(x)(30))
+print(condEcdf30[1:4])
+
+## to use other functions of the package randomForest, convert class back
+class(qrf) <- "randomForest"
+importance(qrf) ## importance measure from the standard RF
+
+
+
+
 
 }
 \keyword{ regression }
