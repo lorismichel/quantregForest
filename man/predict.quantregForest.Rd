@@ -8,12 +8,14 @@ Prediction of test data with quantile regression forests.
 }
 
 \usage{
-\method{predict}{quantregForest}(object, newdata, 
+\method{predict}{quantregForest}(object, newdata = NULL, 
                          what = c(0.1, 0.5, 0.9), ...)
 }
 \arguments{
 \item{object}{ An object of class \code{quantregForest} }
-\item{newdata}{ A data frame or matrix containing new data. }
+\item{newdata}{ A data frame or matrix containing new data. 
+
+If left at default \code{NULL}, the out-of-bag predictions (OOB) are returned, for which the option \code{keep.inbag} has to be set to \code{TRUE} at the time of fitting the object. }
 \item{what}{ Can be a vector of quantiles or a function.
  
  Default for \code{what} is a a vector of quantiles (with numerical values in
@@ -35,7 +37,7 @@ If \code{what} is a function with numerical return value (for example via \code{
 If \code{what} has a function as output (such as \code{what=ecdf}), a list will be returned with one element per new sample point (and the element contains the desired function).
 }
 \author{
-Nicolai Meinshausen
+Nicolai Meinshausen, Christina Heinze
 }
 
 \seealso{

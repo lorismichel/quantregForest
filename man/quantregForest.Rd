@@ -6,11 +6,13 @@
   data
 }
 \usage{
-quantregForest(x,y, ...)
+quantregForest(x,y, nthreads=1, keep.inbag=FALSE, ...)
 }
 \arguments{
   \item{x}{ A matrix or data.frame containing the predictor variables. }
   \item{y}{ The response variable. }
+  \item{nthreads}{ The number of threads to use (for parallel computation). }
+  \item{keep.inbag}{ Keep information which observations are in and out-of-bag? For out-of-bag predictions, this argument needs to be set to \code{TRUE}. }
   \item{...}{ Other arguments passed to \code{randomForest} such as  \code{nodesize} or \code{mtry} etc.}
 }
 \value{
@@ -19,14 +21,17 @@ quantregForest(x,y, ...)
   \item{call}{the original call to \code{quantregForest}}
   \item{valuesNodes}{a matrix that contains per tree and node one subsampled observation}
 }
-\details{ The object can be converted back into a standard \code{randomForest} object and all the functions of the \code{randomForest] package can then be used (see example below).}
+\details{ The object can be converted back into a standard \code{randomForest} object and all the functions of the \code{randomForest} package can then be used (see example below).
 
- The response \code{y} should be numeric. Some use cases exists if \code{y} is a factor (such as sampling from conditional distribution when using for example \code{what=function(x) sample(x,10)} as shown for a numerical response in the examples. However, trying to generate quantiles will generate an error if \code{y} is a factor and the functions is really meant more for ncontinuous responses.)
+ The response \code{y} should in general be numeric. However, some use cases exists if \code{y} is a factor (such as sampling from conditional distribution when using for example \code{what=function(x) sample(x,10)}). Trying to generate quantiles will generate an error if \code{y} is a factor, though.
+
+Parallel computation is invoked by setting the value of \code{nthreads} to values larger than 1 (for example to the number of available CPUs). 
+The argument only has an effect under Linux and Mac OSX and is without effect on Windows due to restrictions on forking.
 }
 \references{N. Meinshausen (2006)
 "Quantile Regression Forests", Journal of Machine Learning Research 7, 983-999
 \url{http://jmlr.csail.mit.edu/papers/v7/}}
-\author{ Nicolai Meinshausen }
+\author{ Nicolai Meinshausen, Christina Heinze }
 \seealso{
 \code{\link{predict.quantregForest}}
 }
@@ -63,6 +68,9 @@ qrf <- quantregForest(x=Xtrain, y=Ytrain)
 qrf <- quantregForest(x=Xtrain, y=Ytrain, nodesize=10,sampsize=30)
 
 
+## for parallel computation use the nthread option
+## qrf <- quantregForest(x=Xtrain, y=Ytrain, nthread=8)
+
 ## predict 0.1, 0.5 and 0.9 quantiles for test data
 conditionalQuantiles  <- predict(qrf,  Xtest)
 print(conditionalQuantiles[1:4,])
@@ -97,7 +105,21 @@ class(qrf) <- "randomForest"
 importance(qrf) ## importance measure from the standard RF
 
 
+#####################################
+## out-of-bag predictions and sampling
+##################################
 
+## for with option keep.inbag=TRUE
+qrf <- quantregForest(x=Xtrain, y=Ytrain, keep.inbag=TRUE)
+
+## or use parallel version
+## qrf <- quantregForest(x=Xtrain, y=Ytrain, nthread=8)
+
+## get quantiles 
+oobQuantiles <- predict( qrf, what= c(0.2,0.5,0.8))
+
+## sample from oob-distribution
+oobSample <- predict( qrf, what= function(x) sample(x,1))
 
 
 }

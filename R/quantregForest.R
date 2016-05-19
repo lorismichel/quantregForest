@@ -1,9 +1,9 @@
 "quantregForest" <-
-function(x,y, ...){
+function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
 
   ## Some checks 
-  if(! class(y) %in% c("numeric","integer") )
-    stop(" y must be numeric ")
+  #if(! class(y) %in% c("numeric","integer") )
+  #  stop(" y must be numeric ")
   
   if(is.null(nrow(x)) || is.null(ncol(x)))
     stop(" x contains no data ")
@@ -34,24 +34,45 @@ function(x,y, ...){
   cl <- match.call()
   cl[[1]] <- as.name("quantregForest")
 
-  qrf <- randomForest( x=x,y=y ,...)
+  qrf <- if(nthreads > 1){
+    parallelRandomForest(x=x, y=y, nthreads = nthreads,keep.inbag=keep.inbag, ...)
+  }else{
+    randomForest( x=x,y=y ,keep.inbag=keep.inbag,...)
+  }
+  
   nodesX <- attr(predict(qrf,x,nodes=TRUE),"nodes")
   rownames(nodesX) <- NULL
   nnodes <- max(nodesX)
   ntree <- ncol(nodesX)
   n <- nrow(x)
-  valuesNodes <- matrix(nrow=nnodes,ncol=ntree)
+  valuesNodes  <- matrix(nrow=nnodes,ncol=ntree)
+  
   for (tree in 1:ntree){
       shuffledNodes <- nodesX[rank(ind <- sample(1:n,n)),tree]
       useNodes <- sort(unique(as.numeric(shuffledNodes)))
       valuesNodes[useNodes,tree] <- y[ind[match(useNodes,shuffledNodes )]]
   }
+ 
   
-  class(qrf) <- c("quantregForest","randomForest")
 
   qrf[["call"]] <- cl
   qrf[["valuesNodes"]] <- valuesNodes
 
-  
+  if(keep.inbag){
+      predictOOBNodes <- attr(predict(qrf,newdata=x,nodes=TRUE),"nodes")
+      rownames(predictOOBNodes) <- NULL
+      valuesPredict <- 0*predictOOBNodes
+      ntree <- ncol(valuesNodes)
+      for (tree in 1:ntree){
+          valuesPredict[,tree] <- valuesNodes[ predictOOBNodes[,tree],tree]  
+      }
+      valuesPredict[ qrf$inbag >0] <- NA
+      minoob <- min( apply(!is.na(valuesPredict),1,sum))
+      if(minoob<10) stop("need to increase number of trees for sufficiently many out-of-bag observations")
+      valuesOOB <- t(apply( valuesPredict,1 , function(x) sample( x[!is.na(x)], minoob)))
+      qrf[["valuesOOB"]] <- valuesOOB
+  }
+  class(qrf) <- c("quantregForest","randomForest")
+
   return(qrf)
 }
