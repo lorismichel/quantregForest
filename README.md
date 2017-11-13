@@ -27,6 +27,6 @@ install.packages("devtools")
 devtools::install_github("lorismichel/quantregForest")
 ```
 
-## Issues tracking
+## Issues
 
-an feedback on potential bugs can be reported [here](http://github.com/lorismichel/quantregForest/issues)
+To report an issue, please use the [issue tracker](http://github.com/lorismichel/quantregForest/issues) on github.com.
