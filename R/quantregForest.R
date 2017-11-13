@@ -83,7 +83,7 @@ function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
 			   
 			    return(cur.y)
 		       })
-      valuesPredict[is.oob, y.oob] <- res
+      valuesPredict[is.oob, tree] <- y.oob
     }
 
      # predictOOBNodes <- attr(predict(qrf,newdata=x,nodes=TRUE),"nodes")
