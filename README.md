@@ -26,3 +26,7 @@ if you want to have access to the development on github you can use:
 install.packages("devtools")
 devtools::install_github("lorismichel/quantregForest")
 ```
+
+## Issues tracking
+
+an feedback on potential bugs can be reported [here](http://github.com/lorismichel/quantregForest/issues)
