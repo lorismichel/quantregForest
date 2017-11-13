@@ -1,6 +1,6 @@
 ## General
 * This release fixes a bug in the out-of-bag predictions.
-* I will be (Loris Michel) the new maintainer of this package. This was agreed with the previous maintainer and author of the package Nicolai Meinshausen.
+* I will be (Loris Michel) the new maintainer of this package. This was agreed with the previous maintainer and author of the package Nicolai Meinshausen. You can validate with him directly <meinshausen@stat.math.ethz.ch>.
 
 ## Test environments
 * Local, macOS Sierra 10.12.6, R-3.4.2
