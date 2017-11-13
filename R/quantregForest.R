@@ -72,10 +72,11 @@ function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
       is.oob <- qrf$inbag[,tree] == 0
       res <- sapply(which(is.oob), function(i) {
 			    cur.node <- nodesX[i,tree]
-			    cur.y <- if(length(cur.y <- y[setdiff(which(nodesX[,tree]==cur.node),i)])!=0){sample(cur.y,1)} else {NA}
+			    cur.y <- if(length(cur.y <- y[setdiff(which(nodesX[,tree]==cur.node),i)])!=0){sample(x = cur.y,size = 1)} else {NA}
+			   
 			    return(cur.y)
 		       })
-      valuesPredict[is.oob, ntree] <- res
+      valuesPredict[is.oob, tree] <- res
     }
 
      # predictOOBNodes <- attr(predict(qrf,newdata=x,nodes=TRUE),"nodes")
