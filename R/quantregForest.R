@@ -72,7 +72,11 @@ function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
     for (tree in 1:ntree){
 
       is.oob <- qrf$inbag[,tree] == 0
-      y.oob  <- sapply(which(is.oob),
+      n.oob <- sum(is.oob)
+
+      if(n.oob!=0) {
+      	
+	  y.oob  <- sapply(which(is.oob),
 		    function(i) {
 			    cur.node <- nodesX[i,tree]
 			    cur.y <- if(length(cur.y <- y[setdiff(which(nodesX[,tree]==cur.node),i)])!=0) {
@@ -82,7 +86,8 @@ function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
 			    	     }			   
 			    return(cur.y)
 		       })
-      valuesPredict[is.oob, tree] <- y.oob
+          valuesPredict[is.oob, tree] <- y.oob
+      }
     }
 
     minoob <- min( apply(!is.na(valuesPredict),1,sum))
