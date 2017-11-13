@@ -59,25 +59,33 @@ function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
   qrf[["valuesNodes"]] <- valuesNodes
 
   if(keep.inbag){
+    
+    predictOOBNodes <- attr(predict(qrf,newdata=x,nodes=TRUE),"nodes")
+     rownames(predictOOBNodes) <- NULL
+    valuesPredict <- 0*predictOOBNodes
+    ntree <- ncol(valuesNodes)
+    valuesPredict[ qrf$inbag >0] <- NA
+
+
     # remove the out of bag observations first
     for (tree in 1:ntree){
       is.oob <- qrf$inbag[,tree] == 0
-      n.inb <- sum(!is.oob)
-      y.inb <- y[!is.oob]
-      nodesX.inb <- nodesX[!is.oob,tree]
-      shuffledNodes <- nodesX.inb[rank(ind.inb <- sample(1:n.inb,n.inb))]
-      useNodes <- sort(unique(as.numeric(shuffledNodes)))
-      valuesNodes[useNodes,tree] <- y.inb[ind.inb[match(useNodes,shuffledNodes )]]
+      res <- sapply(which(is.oob), function(i) {
+			    cur.node <- nodesX[i,tree]
+			    cur.y <- sample(y[setdiff(nodesX[,tree]==cur.node,i)],1)
+			    return(cur.y)
+		       })
+      valuesPredict[is.oob, ntree] <- res
     }
 
-      predictOOBNodes <- attr(predict(qrf,newdata=x,nodes=TRUE),"nodes")
-      rownames(predictOOBNodes) <- NULL
-      valuesPredict <- 0*predictOOBNodes
-      ntree <- ncol(valuesNodes)
-      for (tree in 1:ntree){
-          valuesPredict[,tree] <- valuesNodes[ predictOOBNodes[,tree],tree]
-      }
-      valuesPredict[ qrf$inbag >0] <- NA
+     # predictOOBNodes <- attr(predict(qrf,newdata=x,nodes=TRUE),"nodes")
+     # rownames(predictOOBNodes) <- NULL
+     # valuesPredict <- 0*predictOOBNodes
+     # ntree <- ncol(valuesNodes)
+     # for (tree in 1:ntree){
+     #     valuesPredict[,tree] <- valuesNodes[ predictOOBNodes[,tree],tree]
+     # }
+     # valuesPredict[ qrf$inbag >0] <- NA
       minoob <- min( apply(!is.na(valuesPredict),1,sum))
       if(minoob<10) stop("need to increase number of trees for sufficiently many out-of-bag observations")
       valuesOOB <- t(apply( valuesPredict,1 , function(x) sample( x[!is.na(x)], minoob)))
