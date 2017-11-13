@@ -1,0 +1,6 @@
+^appveyor\.yml
+^\.travis\.yml$
+^cran-comments\.md$
+^\.Rhub\.R$
+^appveyor\.yml$
+^revdep$
