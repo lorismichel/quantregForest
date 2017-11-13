@@ -6,6 +6,12 @@
 [![HitCount](http://hits.dwyl.io/lorismichel/quantregForest.svg)](http://hits.dwyl.io/lorismichel/quantregForest)
 ## Overview
 
+Quantile Regression Forests is a tree-based ensemble
+method for estimation of conditional quantiles (Meinshausen, 2006). It is
+particularly well suited for high-dimensional data. Predictor
+variables of mixed classes can be handled. The package is
+dependent on the package 'randomForest', written by Andy Liaw.
+
 ## Installation
 
 you can install the official version from CRAN using the command:
