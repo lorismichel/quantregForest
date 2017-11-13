@@ -60,23 +60,30 @@ function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
 
   if(keep.inbag){
     
+    # create a prediction vector with same shape as predictOOBNodes
     predictOOBNodes <- attr(predict(qrf,newdata=x,nodes=TRUE),"nodes")
-     rownames(predictOOBNodes) <- NULL
+    rownames(predictOOBNodes) <- NULL
     valuesPredict <- 0*predictOOBNodes
     ntree <- ncol(valuesNodes)
     valuesPredict[ qrf$inbag >0] <- NA
 
 
-    # remove the out of bag observations first
+    # for each tree and observation sample another observation of the same node
     for (tree in 1:ntree){
+
       is.oob <- qrf$inbag[,tree] == 0
-      res <- sapply(which(is.oob), function(i) {
+      y.oob  <- sapply(which(is.oob),
+		    function(i) {
 			    cur.node <- nodesX[i,tree]
-			    cur.y <- if(length(cur.y <- y[setdiff(which(nodesX[,tree]==cur.node),i)])!=0){sample(x = cur.y,size = 1)} else {NA}
+			    cur.y <- if(length(cur.y <- y[setdiff(which(nodesX[,tree]==cur.node),i)])!=0) {
+				    	sample(x = cur.y,size = 1)
+			             } else {
+			              	NA
+			    	     }
 			   
 			    return(cur.y)
 		       })
-      valuesPredict[is.oob, tree] <- res
+      valuesPredict[is.oob, y.oob] <- res
     }
 
      # predictOOBNodes <- attr(predict(qrf,newdata=x,nodes=TRUE),"nodes")
