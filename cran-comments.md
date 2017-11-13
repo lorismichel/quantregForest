@@ -11,6 +11,17 @@ This release fixes a bug in the out-of-bag predictions.
   * Ubuntu Linux 16.04 LTS, R-release, GCC
 
 
+## R CMD check results
 
+0 ERRORs | 0 WARNINGs | 2 NOTES.
+
+* New maintainer
+
+This was agreed with the previous maintainer and author of the package Nicolai Meinshausen. 
+
+* It is good practice to register native routines and to disable symbol
+search.
+
+This error seems to be recurrent but not important.
 
 
