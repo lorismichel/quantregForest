@@ -1,7 +1,7 @@
 This release fixes a bug in the out-of-bag predictions.
 
 ## Test environments
-
+* Local, macOS Sierra 10.12.6, R-3.4.2
 * Ubuntu 12.04 (on travis-ci), R-3.1, R-3.2, R-oldrel, R-release, R-devel
 * Windows Server 2012 R2 (x64) (on AppVeyor-ci), R 3.4.2
 * Rhub
@@ -13,15 +13,12 @@ This release fixes a bug in the out-of-bag predictions.
 
 ## R CMD check results
 
-0 ERRORs | 0 WARNINGs | 2 NOTES.
+0 ERRORs | 0 WARNINGs | 0  NOTES.
 
-* New maintainer
+## New Maintainer 
 
-This was agreed with the previous maintainer and author of the package Nicolai Meinshausen. 
+* I will be (Loris Michel) the new maintainer of this package. This was agreed with the previous maintainer and author of the package Nicolai Meinshausen. 
 
-* It is good practice to register native routines and to disable symbol
-search.
 
-This error seems to be recurrent but not important.
 
 

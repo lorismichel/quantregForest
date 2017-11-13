@@ -1,6 +1,7 @@
-^appveyor\.yml
-^\.travis\.yml$
-^cran-comments\.md$
-^\.Rhub\.R$
 ^appveyor\.yml$
+^\.travis\.yml$
+^README\.md$
+^cran-comments\.md$
+^News\.md$
+^\.Rhub\.R$
 ^revdep$
