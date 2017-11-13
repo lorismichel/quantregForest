@@ -79,25 +79,16 @@ function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
 				    	sample(x = cur.y,size = 1)
 			             } else {
 			              	NA
-			    	     }
-			   
+			    	     }			   
 			    return(cur.y)
 		       })
       valuesPredict[is.oob, tree] <- y.oob
     }
 
-     # predictOOBNodes <- attr(predict(qrf,newdata=x,nodes=TRUE),"nodes")
-     # rownames(predictOOBNodes) <- NULL
-     # valuesPredict <- 0*predictOOBNodes
-     # ntree <- ncol(valuesNodes)
-     # for (tree in 1:ntree){
-     #     valuesPredict[,tree] <- valuesNodes[ predictOOBNodes[,tree],tree]
-     # }
-     # valuesPredict[ qrf$inbag >0] <- NA
-      minoob <- min( apply(!is.na(valuesPredict),1,sum))
-      if(minoob<10) stop("need to increase number of trees for sufficiently many out-of-bag observations")
-      valuesOOB <- t(apply( valuesPredict,1 , function(x) sample( x[!is.na(x)], minoob)))
-      qrf[["valuesOOB"]] <- valuesOOB
+    minoob <- min( apply(!is.na(valuesPredict),1,sum))
+    if(minoob<10) stop("need to increase number of trees for sufficiently many out-of-bag observations")
+    valuesOOB <- t(apply( valuesPredict,1 , function(x) sample( x[!is.na(x)], minoob)))
+    qrf[["valuesOOB"]] <- valuesOOB
   }
   class(qrf) <- c("quantregForest","randomForest")
 
