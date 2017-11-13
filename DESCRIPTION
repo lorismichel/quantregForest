@@ -15,7 +15,3 @@ Description: Quantile Regression Forests is a tree-based ensemble
         dependent on the package 'randomForest', written by Andy Liaw.
 License: GPL
 NeedsCompilation: yes
-Packaged: 2016-05-19 11:58:11 UTC; nicolai
-Repository: CRAN
-Date/Publication: 2016-05-19 16:32:47
-RoxygenNote: 6.0.1
