@@ -7,7 +7,7 @@
 ## Overview
 
 Quantile Regression Forests is a tree-based ensemble
-method for estimation of conditional quantiles (Meinshausen, 2006). It is
+method for estimation of conditional quantiles [(Meinshausen, 2006)](http://stat.ethz.ch/~nicolai/quantregforests.pdf). It is
 particularly well suited for high-dimensional data. Predictor
 variables of mixed classes can be handled. The package is
 dependent on the package 'randomForest', written by Andy Liaw.
