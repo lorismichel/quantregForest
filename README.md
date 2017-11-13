@@ -1,4 +1,4 @@
-# quantregForest: 
+# quantregForest 
  
 [![Build Status](https://travis-ci.org/lorismichel/quantregForest.svg?branch=master)](https://travis-ci.org/lorismichel/quantregForest)
 [![Build status](https://ci.appveyor.com/api/projects/status/8ea2sqbnfq9rsu1s/branch/master?svg=true)](https://ci.appveyor.com/project/lorismichel/quantregforest/branch/master)
@@ -20,7 +20,7 @@ you can install the official version from CRAN using the command:
 install.packages("quantregForest")
 ```
 
-if you want to have access to the development on github you can use:
+if you want to install the development version  on github use:
 
 ``` r
 install.packages("devtools")

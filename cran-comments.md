@@ -1,4 +1,6 @@
-This release fixes a bug in the out-of-bag predictions.
+## General
+* This release fixes a bug in the out-of-bag predictions.
+* I will be (Loris Michel) the new maintainer of this package. This was agreed with the previous maintainer and author of the package Nicolai Meinshausen.
 
 ## Test environments
 * Local, macOS Sierra 10.12.6, R-3.4.2
@@ -10,15 +12,9 @@ This release fixes a bug in the out-of-bag predictions.
   * Fedora Linux, R-devel, clang, gfortran
   * Ubuntu Linux 16.04 LTS, R-release, GCC
 
-
 ## R CMD check results
 
 0 ERRORs | 0 WARNINGs | 0  NOTES.
 
-## New Maintainer 
-
-* I will be (Loris Michel) the new maintainer of this package. This was agreed with the previous maintainer and author of the package Nicolai Meinshausen. 
-
-
-
-
+## Downstream dependencies
+I have also run R CMD check on downstream dependencies of quantregForest, all packages passed the checks.
