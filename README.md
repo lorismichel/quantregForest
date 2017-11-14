@@ -4,8 +4,10 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/8ea2sqbnfq9rsu1s/branch/master?svg=true)](https://ci.appveyor.com/project/lorismichel/quantregforest/branch/master)
 [![codecov](https://codecov.io/gh/lorismichel/quantregForest/branch/master/graph/badge.svg)](https://codecov.io/gh/lorismichel/quantregForest)
 [![HitCount](http://hits.dwyl.io/lorismichel/quantregForest.svg)](http://hits.dwyl.io/lorismichel/quantregForest)
-## Overview
+[![CRAN](http://www.r-pkg.org/badges/version-ago/quantregForest)](http://www.r-pkg.org/badges/version-ago/quantregForest)
+[![CRAN](http://cranlogs.r-pkg.org/badges/quantregForest)](http://cranlogs.r-pkg.org/badges/quantregForest)
 
+## Overview
 Quantile Regression Forests is a tree-based ensemble
 method for estimation of conditional quantiles [(Meinshausen, 2006)](http://stat.ethz.ch/~nicolai/quantregforests.pdf). It is
 particularly well suited for high-dimensional data. Predictor
