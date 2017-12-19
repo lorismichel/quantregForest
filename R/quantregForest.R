@@ -65,7 +65,7 @@ function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
     rownames(predictOOBNodes) <- NULL
     valuesPredict <- 0*predictOOBNodes
     ntree <- ncol(valuesNodes)
-    valuesPredict[ qrf$inbag >0] <- NA
+    valuesPredict[qrf$inbag >0] <- NA
 
 
     # for each tree and observation sample another observation of the same node
@@ -78,13 +78,15 @@ function(x,y, nthreads = 1, keep.inbag=FALSE, ...){
       	
 	  y.oob  <- sapply(which(is.oob),
 		    function(i) {
-			    cur.node <- nodesX[i,tree]
-			    cur.y <- if(length(cur.y <- y[setdiff(which(nodesX[,tree]==cur.node),i)])!=0) {
-				    	sample(x = cur.y,size = 1)
-			             } else {
-			              	NA
-			    	     }			   
-			    return(cur.y)
+			    cur.node <- nodesX[i, tree]
+			    
+			    y.sampled <- if (length(cur.y <- y[setdiff(which(nodesX[,tree] == cur.node)
+			                                               ,i)])!=0) {
+			                cur.y[sample(x = 1:length(cur.y), size = 1)]
+			                 } else {
+			              	   NA
+			    	           }			   
+			    return(y.sampled)
 		       })
           valuesPredict[is.oob, tree] <- y.oob
       }

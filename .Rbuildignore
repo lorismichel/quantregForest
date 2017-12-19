@@ -4,3 +4,7 @@
 ^cran-comments\.md$
 ^News\.md$
 ^revdep$
+^docs$
+^.*\.Rproj$
+^\.Rproj\.user$
+^\quantregForest\.pdf$

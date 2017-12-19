@@ -28,3 +28,4 @@ vignettes/*.pdf
 *.o
 *.so
 /revdep/.cache.rds
+inst/doc
