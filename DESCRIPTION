@@ -3,8 +3,6 @@ Type: Package
 Title: Quantile Regression Forests
 Version: 1.3-7
 Date: 2017-12-16
-Author: Nicolai Meinshausen
-Maintainer: Loris Michel <michel@stat.math.ethz.ch>
 Authors@R: c(
   person("Nicolai","Meinshausen", role="aut", email="meinshausen@stat.math.ethz.ch"),
   person("Loris","Michel", role="cre", email="michel@stat.math.ethz.ch"))
