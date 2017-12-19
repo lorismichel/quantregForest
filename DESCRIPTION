@@ -20,4 +20,3 @@ NeedsCompilation: yes
 URL: http://github.com/lorismichel/quantregForest
 BugReports: http://github.com/lorismichel/quantregForest/issues
 RoxygenNote: 6.0.1
-VignetteBuilder: knitr
