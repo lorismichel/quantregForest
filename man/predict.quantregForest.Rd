@@ -22,6 +22,7 @@ If left at default \code{NULL}, the out-of-bag predictions (OOB) are returned, f
     [0,1]) for which the conditional quantile estimates should be returned.
 
 If a function it has to take as argument a numeric vector and return either a summary statistic (such as \code{mean},\code{median} or \code{sd} to get conditional mean, median or standard deviation) or a vector of values (such as with \code{quantiles} or via \code{sample}) or a function (for example with \code{ecdf}).}  
+\item{keep.conditional.samples}{a logical value, should be keep the conditional samples?}
 \item{...}{ Additional arguments (currently not in use).}
 }
 
