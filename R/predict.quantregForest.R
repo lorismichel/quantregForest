@@ -1,4 +1,4 @@
-"predict.quantregForest"<-function(object,newdata=NULL, what=c(0.1,0.5,0.9),...  )
+"predict.quantregForest"<-function(object,newdata=NULL, what=c(0.1,0.5,0.9), keep.conditional.samples = F,...  )
 {
     class(object) <- "randomForest"
     if(is.null(newdata)){
@@ -34,7 +34,12 @@
             colnames(result) <- paste("quantile=",what)
         }
     }
-    return(result)
+
+    if (keep.conditional.samples) {
+      return(list(quantiles = result, samples = valuesPredict))
+    } else {
+      return(result)
+    }
     
     
 }
