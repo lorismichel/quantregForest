@@ -9,7 +9,7 @@ Prediction of test data with quantile regression forests.
 
 \usage{
 \method{predict}{quantregForest}(object, newdata = NULL, 
-                         what = c(0.1, 0.5, 0.9), ...)
+                         what = c(0.1, 0.5, 0.9), keep.conditional.samples = F,...)
 }
 \arguments{
 \item{object}{ An object of class \code{quantregForest} }
